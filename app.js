@@ -1,21 +1,30 @@
 const http = require('http');
+const fs = require('fs');
 
+const renderHTML = (data,res) => {
+    fs.readFile(data,(err,data) => {
+        if(err){
+            res.writeHead(404);
+            res.write(err);
+        }else{
+            res.write(data);
+        }
+        res.end();
+    })
+}
 const server =http.createServer((req,res) => {
     let url = req.url;
     
     res.writeHead(200,{
         'Content-Type' : 'text/html'
     })
-
+    
     if(url === '/about'){
-        res.write('About');
-        res.end();
+        renderHTML('./about.html',res)
     }else if(url === '/contact'){
-        res.write('Contact')
-        res.end()
+        renderHTML('./contact.html',res)
     }else{
-        res.write('Hello world');
-        res.end();
+        renderHTML('./index.html',res)
     }
 })
 
