@@ -25,17 +25,22 @@ app.get('/',(req,res) => {
 
     res.render('index',{
         name: 'Reymunda',
+        title: 'Home Page',
         hobby        
     });
 
 })
 app.get('/about',(req,res) => {
     // res.sendFile('./about.html',{root: __dirname});
-    res.render('about');
+    res.render('about',{
+        title: 'About Page'
+    });
 })
 app.get('/contact',(req,res) => {
     // res.sendFile('./contact.html',{root: __dirname});
-    res.render('contact');
+    res.render('contact',{
+        title: 'Contact Page'
+    });
 })
 app.get('/category/:id/product/:code',(req,res) => {
     res.send(`Category id: ${req.params.id} \n Product code: ${req.params.code} \n Search for: ${req.query.search}`);
