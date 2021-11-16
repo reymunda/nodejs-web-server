@@ -1,11 +1,13 @@
 const http = require('http');
 const fs = require('fs');
 const express = require('express');
-
+const expressLayout = require('express-ejs-layouts');
 const app = express();
+
 
 app.set('view engine','ejs');
 
+app.use(expressLayout);
 app.get('/',(req,res) => {
     // res.sendFile('./index.html',{root: __dirname});
     let hobby = [
@@ -26,6 +28,7 @@ app.get('/',(req,res) => {
     res.render('index',{
         name: 'Reymunda',
         title: 'Home Page',
+        layout: 'layouts/main',
         hobby        
     });
 
@@ -33,13 +36,15 @@ app.get('/',(req,res) => {
 app.get('/about',(req,res) => {
     // res.sendFile('./about.html',{root: __dirname});
     res.render('about',{
-        title: 'About Page'
+        title: 'About Page',
+        layout: 'layouts/main'
     });
 })
 app.get('/contact',(req,res) => {
     // res.sendFile('./contact.html',{root: __dirname});
     res.render('contact',{
-        title: 'Contact Page'
+        title: 'Contact Page',
+        layout: 'layouts/main'
     });
 })
 app.get('/category/:id/product/:code',(req,res) => {
