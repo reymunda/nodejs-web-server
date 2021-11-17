@@ -2,13 +2,15 @@ const http = require('http');
 const fs = require('fs');
 const express = require('express');
 const expressLayout = require('express-ejs-layouts');
+const morgan = require('morgan');
+
 const app = express();
 
 
 app.set('view engine','ejs');
 
+app.use(morgan('dev'));
 app.use(expressLayout);
-
 app.use(express.static('public'));
 
 app.use((req,res,next) => {
