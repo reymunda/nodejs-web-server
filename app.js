@@ -8,6 +8,12 @@ const app = express();
 app.set('view engine','ejs');
 
 app.use(expressLayout);
+
+app.use((req,res,next) => {
+    console.log(`Time: ${Date.now()}`);
+    next();
+})
+
 app.get('/',(req,res) => {
     // res.sendFile('./index.html',{root: __dirname});
     let hobby = [
@@ -31,7 +37,6 @@ app.get('/',(req,res) => {
         layout: 'layouts/main',
         hobby        
     });
-
 })
 app.get('/about',(req,res) => {
     // res.sendFile('./about.html',{root: __dirname});
