@@ -9,6 +9,8 @@ app.set('view engine','ejs');
 
 app.use(expressLayout);
 
+app.use(express.static('public'));
+
 app.use((req,res,next) => {
     console.log(`Time: ${Date.now()}`);
     next();
