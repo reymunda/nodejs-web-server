@@ -1,6 +1,6 @@
 <div class="container mt-5">
     <div class="row">
-        <h2 class="mb-3">Contact List <span class=" ms-2 badge bg-success">1</span></h2>
+        <h2 class="mb-3">Contact List <span class=" ms-2 badge bg-success"><%= contacts.length %> </span></h2>
     </div>
     <div class="row">
         <div class="col">
@@ -14,14 +14,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>0812345678</td>
-                        <td>Reymunda</td>
-                        <td class="text-center">
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#detailModal">Detail</button>
-                        </td>
-                    </tr>
+                    <% if(contacts.length !== 0){ %>
+                        <% contacts.forEach((e,i) => { %>
+                            <tr>
+                                <td><%= i+1 %> </td>
+                                <td><%= e.name %> </td>
+                                <td><%= e.phone %> </td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#detailModal">Detail</button>
+                                </td>
+                            </tr>
+                        <% }) %>  
+                    <% } else{ %>  
+                        <tr>
+                            <div>
+                                <td colspan="4">
+                                    <p class="text-center">Contact is Empty</p>
+                                </td>
+                            </div>
+                        </tr>
+                    <% } %> 
                 </tbody>
               </table>
         </div>

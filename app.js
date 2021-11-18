@@ -1,10 +1,9 @@
 const http = require('http');
-const fs = require('fs');
 const express = require('express');
 const expressLayout = require('express-ejs-layouts');
+const {loadContact} = require('./utils/contact');
 
 const app = express();
-
 
 app.set('view engine','ejs');
 
@@ -47,7 +46,8 @@ app.get('/contact',(req,res) => {
     // res.sendFile('./contact.html',{root: __dirname});
     res.render('contact',{
         title: 'Contact Page',
-        layout: 'layouts/main'
+        layout: 'layouts/main',
+        contacts: loadContact()
     });
 })
 
