@@ -1,8 +1,11 @@
 const http = require('http');
 const express = require('express');
-const expressLayout = require('express-ejs-layouts');
 const {loadContact,detailContact,addContact,duplicateCheck} = require('./utils/contact');
 const {body,check,validationResult} = require('express-validator');
+const expressLayout = require('express-ejs-layouts');
+const session = require('express-session');
+const flash = require('connect-flash');
+const cookieParser = require('cookie-parser')
 
 const app = express();
 
@@ -11,7 +14,14 @@ app.set('view engine','ejs');
 app.use(expressLayout);
 app.use(express.static('public'));
 app.use(express.urlencoded());
-
+app.use(cookieParser('secret'));
+app.use(session({
+    cookie: {maxAge: 6000},
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+}))
+app.use(flash())
 app.get('/',(req,res) => {
     // res.sendFile('./index.html',{root: __dirname});
     let hobby = [
@@ -50,7 +60,8 @@ app.get('/contact',(req,res) => {
         title: 'Contact Page',
         layout: 'layouts/main',
         contacts,
-        detailContact
+        detailContact,
+        msg: req.flash('msg')
     }
     );
 })
@@ -82,6 +93,7 @@ app.post('/contact/add',[
         })
     }
     addContact(req.body);
+    req.flash('msg','Contact successfully added!');
     res.redirect('/contact');
 })
 
