@@ -1,7 +1,8 @@
 const http = require('http');
 const express = require('express');
 const expressLayout = require('express-ejs-layouts');
-const {loadContact,detailContact,addContact} = require('./utils/contact');
+const {loadContact,detailContact,addContact,duplicateCheck} = require('./utils/contact');
+const {body,check,validationResult} = require('express-validator');
 
 const app = express();
 
@@ -59,7 +60,27 @@ app.get('/contact/add',(req,res) => {
         layout: 'layouts/main',
     })
 })
-app.post('/contact',(req,res) => {
+app.post('/contact/add',[
+    check('phone','Phone number is invalid!')
+    .isMobilePhone('id-ID'),
+    body('phone').custom(value => {
+        const duplicate = duplicateCheck(value);
+        if(duplicate){
+            throw new Error('The contact has been added!');
+        }
+        return true;
+    }),
+    check('email','Email is invalid!')
+    .isEmail()
+],(req,res) => {
+    let errors = validationResult(req)
+    if(!errors.isEmpty()){
+        res.render('add',{
+            title: 'Add Contact',
+            layout: 'layouts/main',
+            errors: errors.array()
+        })
+    }
     addContact(req.body);
     res.redirect('/contact');
 })

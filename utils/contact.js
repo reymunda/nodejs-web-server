@@ -20,4 +20,8 @@ const addContact = (data) => {
     dataContact.push(data);
     fs.writeFileSync('./data/contacts.json',JSON.stringify(dataContact));
 }
-module.exports = {loadContact,detailContact,addContact};
+const duplicateCheck = (phone) => {
+    let dataContact = loadContact();
+    return dataContact.find(e => e.phone === phone);
+}
+module.exports = {loadContact,detailContact,addContact,duplicateCheck};

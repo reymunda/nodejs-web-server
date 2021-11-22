@@ -1,8 +1,17 @@
 <div class="container mt-5">
     <div class="row">
+            <% if(typeof errors != 'undefined'){ %>
+                <div class="alert alert-danger" role="alert">
+                    <ul>
+                        <%errors.forEach(e => {%>
+                            <li><%= e.msg %> </li>
+                        <% }) %> 
+                    </ul>
+                </div>
+            <% } %> 
         <h2 class="text-center mb-4">Enter other contact data</h2>
         <div class="col-md-6 mx-auto" style="padding: 20px;border:1px solid #dedede">
-            <form method="post" action="/contact">
+            <form method="post" action="/contact/add">
                 <div class="form-group mb-3">
                   <label for="exampleInputText1">Name</label>
                   <input type="text" name="name" class="form-control" placeholder="Enter your name" required>
