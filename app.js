@@ -1,7 +1,7 @@
 const http = require('http');
 const express = require('express');
 const expressLayout = require('express-ejs-layouts');
-const {loadContact} = require('./utils/contact');
+const {loadContact,detailContact,addContact} = require('./utils/contact');
 
 const app = express();
 
@@ -9,7 +9,7 @@ app.set('view engine','ejs');
 
 app.use(expressLayout);
 app.use(express.static('public'));
-
+app.use(express.urlencoded());
 
 app.get('/',(req,res) => {
     // res.sendFile('./index.html',{root: __dirname});
@@ -44,11 +44,24 @@ app.get('/about',(req,res) => {
 })
 app.get('/contact',(req,res) => {
     // res.sendFile('./contact.html',{root: __dirname});
+    let contacts = loadContact()
     res.render('contact',{
         title: 'Contact Page',
         layout: 'layouts/main',
-        contacts: loadContact()
-    });
+        contacts,
+        detailContact
+    }
+    );
+})
+app.get('/contact/add',(req,res) => {
+    res.render('add',{
+        title: 'Add Contact',
+        layout: 'layouts/main',
+    })
+})
+app.post('/contact',(req,res) => {
+    addContact(req.body);
+    res.redirect('/contact');
 })
 
 app.use('/',(req,res) => {
