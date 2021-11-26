@@ -37,6 +37,7 @@ const editContact = (data) => {
     let dataContact = loadContact();
     let contact = dataContact.find(e => e.phone === data.oldPhone);
     console.log(contact)
+    delete data.oldPhone
     dataContact.splice(dataContact.indexOf(contact),1,data)
     console.log(dataContact);
     fs.writeFileSync('./data/contacts.json', JSON.stringify(dataContact));
