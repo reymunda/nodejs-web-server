@@ -24,4 +24,10 @@ const duplicateCheck = (phone) => {
     let dataContact = loadContact();
     return dataContact.find(e => e.phone === phone);
 }
-module.exports = {loadContact,detailContact,addContact,duplicateCheck};
+const deleteContact = (phone) => {
+    let dataContact = loadContact();
+    let resContact = dataContact.filter(e => e.phone !== phone);
+    fs.writeFileSync('./data/contacts.json',JSON.stringify(resContact));
+}
+
+module.exports = {loadContact,detailContact,addContact,duplicateCheck, deleteContact};

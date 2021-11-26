@@ -1,6 +1,6 @@
 const http = require('http');
 const express = require('express');
-const {loadContact,detailContact,addContact,duplicateCheck} = require('./utils/contact');
+const {loadContact,detailContact,addContact,duplicateCheck, deleteContact} = require('./utils/contact');
 const {body,check,validationResult} = require('express-validator');
 const expressLayout = require('express-ejs-layouts');
 const session = require('express-session');
@@ -96,10 +96,14 @@ app.post('/contact/add',[
     req.flash('msg','Contact successfully added!');
     res.redirect('/contact');
 })
+app.get('/contact/delete/:phone',(req,res) => {
+    deleteContact(req.params.phone);
+    res.redirect('/contact');
+})
 
 app.use('/',(req,res) => {
     res.status(404);
-    res.send('Not Found');
+    res.send('404 Not Found');
 })
 
 app.listen(3000,() => {
