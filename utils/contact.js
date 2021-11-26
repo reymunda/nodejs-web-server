@@ -18,7 +18,7 @@ const detailContact = (name) => {
 const addContact = (data) => {
     let dataContact = JSON.parse(fs.readFileSync('./data/contacts.json','utf-8'));
     dataContact.push(data);
-    fs.writeFileSync('./data/contacts.json',JSON.stringify(dataContact));
+    fs.writeFileSync('./data/contacts.json',JSON.stringify(dataContact,null,2));
 }
 const duplicateCheck = (phone) => {
     let dataContact = loadContact();
@@ -27,7 +27,7 @@ const duplicateCheck = (phone) => {
 const deleteContact = (phone) => {
     let dataContact = loadContact();
     let resContact = dataContact.filter(e => e.phone !== phone);
-    fs.writeFileSync('./data/contacts.json',JSON.stringify(resContact));
+    fs.writeFileSync('./data/contacts.json',JSON.stringify(resContact,null,2));
 }
 const searchContact = (phone) => {
     let dataContact = loadContact();
@@ -40,6 +40,6 @@ const editContact = (data) => {
     delete data.oldPhone
     dataContact.splice(dataContact.indexOf(contact),1,data)
     console.log(dataContact);
-    fs.writeFileSync('./data/contacts.json', JSON.stringify(dataContact));
+    fs.writeFileSync('./data/contacts.json', JSON.stringify(dataContact,null,2));
 }
 module.exports = {loadContact,detailContact,addContact,duplicateCheck, deleteContact, searchContact, editContact};
