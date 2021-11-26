@@ -1,6 +1,6 @@
 const http = require('http');
 const express = require('express');
-const {loadContact,detailContact,addContact,duplicateCheck, deleteContact, searchContact} = require('./utils/contact');
+const {loadContact,detailContact,addContact,duplicateCheck, deleteContact, searchContact, editContact} = require('./utils/contact');
 const {body,check,validationResult} = require('express-validator');
 const expressLayout = require('express-ejs-layouts');
 const session = require('express-session');
@@ -100,6 +100,33 @@ app.get('/contact/delete/:phone',(req,res) => {
     deleteContact(req.params.phone);
     req.flash('msg',`Contact ${req.params.phone} successfully removed!`);
     res.redirect('/contact');
+})
+app.post('/contact/edit',[
+    check('phone','Phone number is invalid!')
+    .isMobilePhone('id-ID'),
+    body('phone').custom(value => {
+        const duplicate = duplicateCheck(value);
+        if(duplicate){
+            throw new Error('The contact has been added!');
+        }
+        return true;
+    }),
+    check('email','Email is invalid!')
+    .isEmail()
+],(req,res) => {
+    let errors = validationResult(req)
+    if(!errors.isEmpty()){
+        res.render('add',{
+            title: 'Add Contact',
+            layout: 'layouts/main',
+            contact: req.body,
+            errors: errors.array()
+        })
+    }else{
+        editContact(req.body);
+        req.flash('msg','Contact successfully updated!');
+        res.redirect('/contact');
+    }
 })
 app.get('/contact/edit/:phone',(req,res) => {
     let contact = searchContact(req.params.phone);

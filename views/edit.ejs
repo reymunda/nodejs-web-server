@@ -11,7 +11,10 @@
             <% } %> 
         <h2 class="text-center mb-4">Enter other contact data</h2>
         <div class="col-md-6 mx-auto" style="padding: 20px;border:1px solid #dedede">
-            <form method="post" action="/contact/add">
+            <form method="post" action="/contact/edit">
+                <div class="form-group mb-3">
+                    <input type="hidden" name="oldPhone" value= "<%= contact.phone %>">
+                </div>
                 <div class="form-group mb-3">
                   <label for="exampleInputText1">Name</label>
                   <input type="text" name="name" class="form-control" value ="<%= contact.name %>">

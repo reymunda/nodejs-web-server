@@ -31,7 +31,13 @@ const deleteContact = (phone) => {
 }
 const searchContact = (phone) => {
     let dataContact = loadContact();
-    return contact = dataContact.find(e => e.phone === phone);
+    return dataContact.find(e => e.phone === phone);
 }
-
-module.exports = {loadContact,detailContact,addContact,duplicateCheck, deleteContact, searchContact};
+const editContact = (data) => {
+    let dataContact = loadContact();
+    let contact = dataContact.filter(e => e.phone !== data.oldPhone);
+    console.log(contact)
+    contact.push(data);
+    fs.writeFileSync('./data/contacts.json', JSON.stringify(contact));
+}
+module.exports = {loadContact,detailContact,addContact,duplicateCheck, deleteContact, searchContact, editContact};
