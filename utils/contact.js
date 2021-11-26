@@ -35,9 +35,10 @@ const searchContact = (phone) => {
 }
 const editContact = (data) => {
     let dataContact = loadContact();
-    let contact = dataContact.filter(e => e.phone !== data.oldPhone);
+    let contact = dataContact.find(e => e.phone === data.oldPhone);
     console.log(contact)
-    contact.push(data);
-    fs.writeFileSync('./data/contacts.json', JSON.stringify(contact));
+    dataContact.splice(dataContact.indexOf(contact),1,data)
+    console.log(dataContact);
+    fs.writeFileSync('./data/contacts.json', JSON.stringify(dataContact));
 }
 module.exports = {loadContact,detailContact,addContact,duplicateCheck, deleteContact, searchContact, editContact};
