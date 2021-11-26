@@ -29,5 +29,9 @@ const deleteContact = (phone) => {
     let resContact = dataContact.filter(e => e.phone !== phone);
     fs.writeFileSync('./data/contacts.json',JSON.stringify(resContact));
 }
+const searchContact = (phone) => {
+    let dataContact = loadContact();
+    return contact = dataContact.find(e => e.phone === phone);
+}
 
-module.exports = {loadContact,detailContact,addContact,duplicateCheck, deleteContact};
+module.exports = {loadContact,detailContact,addContact,duplicateCheck, deleteContact, searchContact};

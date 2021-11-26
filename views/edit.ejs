@@ -1,0 +1,31 @@
+<div class="container mt-5">
+    <div class="row">
+            <% if(typeof errors != 'undefined'){ %>
+                <div class="alert alert-danger" role="alert">
+                    <ul>
+                        <%errors.forEach(e => {%>
+                            <li><%= e.msg %> </li>
+                        <% }) %> 
+                    </ul>
+                </div>
+            <% } %> 
+        <h2 class="text-center mb-4">Enter other contact data</h2>
+        <div class="col-md-6 mx-auto" style="padding: 20px;border:1px solid #dedede">
+            <form method="post" action="/contact/add">
+                <div class="form-group mb-3">
+                  <label for="exampleInputText1">Name</label>
+                  <input type="text" name="name" class="form-control" value ="<%= contact.name %>">
+                </div>
+                <div class="form-group mb-3">
+                  <label for="exampleInputPhone1">Phone Number</label>
+                  <input type="tel" name="phone" class="form-control" value ="<%= contact.phone %>">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="exampleInputPassword1">Email (optional)</label>
+                    <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value ="<%= contact.email %>">
+                </div>
+                <button type="submit" class="btn btn-primary">Edit contact</button>
+              </form>
+        </div>
+    </div>
+</div>

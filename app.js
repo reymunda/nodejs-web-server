@@ -1,6 +1,6 @@
 const http = require('http');
 const express = require('express');
-const {loadContact,detailContact,addContact,duplicateCheck, deleteContact} = require('./utils/contact');
+const {loadContact,detailContact,addContact,duplicateCheck, deleteContact, searchContact} = require('./utils/contact');
 const {body,check,validationResult} = require('express-validator');
 const expressLayout = require('express-ejs-layouts');
 const session = require('express-session');
@@ -98,7 +98,16 @@ app.post('/contact/add',[
 })
 app.get('/contact/delete/:phone',(req,res) => {
     deleteContact(req.params.phone);
+    req.flash('msg',`Contact ${req.params.phone} successfully removed!`);
     res.redirect('/contact');
+})
+app.get('/contact/edit/:phone',(req,res) => {
+    let contact = searchContact(req.params.phone);
+    res.render('edit', {
+        title: 'Edit Contact',
+        layout: 'layouts/main',
+        contact
+    })
 })
 
 app.use('/',(req,res) => {
