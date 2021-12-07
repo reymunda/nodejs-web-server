@@ -1,12 +1,6 @@
 [
   {
-    "name": "Reymunda",
-    "phone": "081234444444",
-    "email": "rey@gmail.com"
-  },
-  {
-    "oldPhone": "0812345666",
-    "name": "Budianto",
+    "name": "Budiantoe",
     "phone": "08123456667",
     "email": "bapabudi@gmail.com"
   },
@@ -50,5 +44,10 @@
     "name": "Joseph",
     "phone": "081244556677",
     "email": "josephstal@gmail.com"
+  },
+  {
+    "name": "Testo",
+    "phone": "0812765432",
+    "email": "testo@gmail.com"
   }
 ]

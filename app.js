@@ -1,6 +1,6 @@
 const http = require('http');
 const express = require('express');
-const {loadContact,detailContact,addContact,duplicateCheck, deleteContact, searchContact, editContact} = require('./utils/contact');
+const {loadContact,detailContact,addContact,duplicateCheck, deleteContact, searchContact, editContact,searchByName} = require('./utils/contact');
 const {body,check,validationResult} = require('express-validator');
 const expressLayout = require('express-ejs-layouts');
 const session = require('express-session');
@@ -104,13 +104,6 @@ app.get('/contact/delete/:phone',(req,res) => {
 app.post('/contact/edit',[
     check('phone','Phone number is invalid!')
     .isMobilePhone('id-ID'),
-    body('phone').custom(value => {
-        const duplicate = duplicateCheck(value);
-        if(duplicate){
-            throw new Error('The contact has been added!');
-        }
-        return true;
-    }),
     check('email','Email is invalid!')
     .isEmail()
 ],(req,res) => {
@@ -136,13 +129,18 @@ app.get('/contact/edit/:phone',(req,res) => {
         contact
     })
 })
-
+app.get('/contact/search',(req,res) => {
+    res.render('search',{
+        title: 'Search Contact',
+        layout: 'layouts/main'
+    })
+})
 app.use('/',(req,res) => {
     res.status(404);
     res.send('404 Not Found');
 })
 
-app.listen(3000,() => {
+app.listen(3001,() => {
    console.log('Server is listening on port 3000'); 
 })
 

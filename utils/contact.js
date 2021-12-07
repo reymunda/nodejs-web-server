@@ -33,6 +33,12 @@ const searchContact = (phone) => {
     let dataContact = loadContact();
     return dataContact.find(e => e.phone === phone);
 }
+const searchByName = (keyword) => {
+   let dataContact = loadContact();
+   return dataContact.filter(e => {
+       e.name.toLowerCase().includes(keyword.toLowerCase())
+    })
+}
 const editContact = (data) => {
     let dataContact = loadContact();
     let contact = dataContact.find(e => e.phone === data.oldPhone);
@@ -42,4 +48,4 @@ const editContact = (data) => {
     console.log(dataContact);
     fs.writeFileSync('./data/contacts.json', JSON.stringify(dataContact,null,2));
 }
-module.exports = {loadContact,detailContact,addContact,duplicateCheck, deleteContact, searchContact, editContact};
+module.exports = {loadContact,detailContact,addContact,duplicateCheck, deleteContact, searchContact, editContact, searchByName};
